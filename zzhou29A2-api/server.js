@@ -36,28 +36,28 @@ app.get('/categories', (req, res) => {
 // Search fundraisers based on optional parameters (organizer, city, category).
 app.get('/fundraisers/search', (req, res) => {
   // Fetch search parameters from the query string
-  var organizer = req.params.organizer;
-  var city = req.params.city;
-  var category = req.params.category;
+  var organizer = req.query.organizer;
+  var city = req.query.city;
+  var category = req.query.category;
 
   // Start building the base query to search active fundraisers
-  var query = 'select * from fundraiser left join category on fundraiser.CATEGORY_ID = category.CATEGORY_ID where active = 1'
+  var query = 'SELECT * FROM fundraiser f LEFT join category c ON f.CATEGORY_ID = c.CATEGORY_ID where active = 1'
   var queryParams = [];
 
   if (organizer) {
-    query += ' AND ORGANIZER LIKE ?';
+    query += ' AND f.ORGANIZER LIKE ?';
     queryParams.push(`%${organizer}%`);
   }
   if (city) {
-    query += ' AND CITY LIKE ?';
+    query += ' AND f.CITY LIKE ?';
     queryParams.push(`%${city}%`);
   }
   if (category) {
-    query += ' AND CATEGORY_ID = ?';
+    query += ' AND f.CATEGORY_ID = ?';
     queryParams.push(category);
   }
 
-  connection.query(query, (err, records) => {
+  connection.query(query, queryParams, (err, records) => {
     if (err) {
       console.log("Query error");
     } else {
