@@ -1,0 +1,12 @@
+{
+  "name": "zzhou29a2-api",
+  "version": "1.0.0",
+  "main": "crowdfunding_db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
